@@ -9,10 +9,7 @@
 
 			console.log(array_of_words);
 
-			// Doesnt work on Android
-			// var set = Array.from(new Set(array_of_words));
-
-			var uniques = []
+			var uniques = [];
 
 			for(var i=0; i<array_of_words.length; i++){
 				if(!uniques.includes(array_of_words[i])){
@@ -21,6 +18,26 @@
 			}
 
 			console.log(uniques);
+
+			function count_of(input_word){
+				return (input_text.split(input_word).length - 1);
+			}
+
+			// generate counts
+			var counts = [];
+
+			var individual_counts = {}
+
+
+			for(var j=0; j<uniques.length; j++){
+				var temp = [];
+				console.log(uniques[j] + " " + count_of(uniques[j]));
+				individual_counts[uniques[j]] = count_of(uniques[j]);
+				// for(var k=0; j<uniques.length; k++){
+				// 	// temp.push(count_of(uniques[k]));
+				// 	console.log(uniques[k] + " " + count_of(uniques[k]));
+				// }
+			}
 
 		</script>
 	</body>

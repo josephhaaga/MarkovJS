@@ -38,7 +38,7 @@
 			// probability (j | i) = count(i + j) / count (i)
 
 			for(var j=0; j<uniques.length; j++){
-				console.log(uniques[j] + " " + count_of(uniques[j]));
+				// console.log(uniques[j] + " " + count_of(uniques[j]));
 				individual_counts[uniques[j]] = count_of(uniques[j]);
 			}
 
@@ -56,7 +56,13 @@
 
 				temp[second_word] = (count_of(bigram)/count_of(first_word));
 
-				probabilities[first_word].push(temp);
+				console.log(probabilities[first_word]);
+
+				if(probabilities[first_word]==undefined){
+					probabilities[first_word] = temp;
+				}else{
+					probabilities[first_word].push(temp);
+				}
 				// The quick
 				// quick brown
 			}

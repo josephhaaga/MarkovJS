@@ -1,0 +1,27 @@
+<html>
+	<script   src="https://code.jquery.com/jquery-migrate-3.0.0.min.js"   integrity="sha256-JklDYODbg0X+8sPiKkcFURb5z7RvlNMIaE3RA2z97vw="   crossorigin="anonymous"></script>
+	<body>
+		<script>
+
+			var input_text = "The quick brown fox jumped over the lazy dog. I dont know why the dog was so lazy, but the fox was quick and brown";
+
+			var array_of_words = input_text.split(" ");
+
+			console.log(array_of_words);
+
+			// Doesnt work on Android
+			// var set = Array.from(new Set(array_of_words));
+
+			var uniques = []
+
+			for(var i=0; i<array_of_words.length; i++){
+				if(!uniques.includes(array_of_words[i])){
+					uniques.push(array_of_words[i]);
+				}
+			}
+
+			console.log(uniques);
+
+		</script>
+	</body>
+</html>

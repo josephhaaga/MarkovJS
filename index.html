@@ -5,6 +5,7 @@
 
 			var input_text = "The quick brown fox jumped over the lazy dog. I dont know why the dog was so lazy, but the fox was quick and brown";
 
+
 			var array_of_words = input_text.split(" ");
 
 			console.log(array_of_words);
@@ -12,6 +13,11 @@
 			var uniques = [];
 
 			for(var i=0; i<array_of_words.length; i++){
+				array_of_words[i] = array_of_words[i].toLowerCase();
+				// remove periods
+				array_of_words[i] = array_of_words[i].replace(".","");
+				// remove commas
+				array_of_words[i] = array_of_words[i].replace(",","");
 				if(!uniques.includes(array_of_words[i])){
 					uniques.push(array_of_words[i]);
 				}
@@ -23,21 +29,38 @@
 				return (input_text.split(input_word).length - 1);
 			}
 
-			// generate counts
-			var counts = [];
+			// generate probabilities
+			var probabilities = [];
 
 			var individual_counts = {}
 
 
+			// probability (j | i) = count(i + j) / count (i)
+
 			for(var j=0; j<uniques.length; j++){
-				var temp = [];
 				console.log(uniques[j] + " " + count_of(uniques[j]));
 				individual_counts[uniques[j]] = count_of(uniques[j]);
-				// for(var k=0; j<uniques.length; k++){
-				// 	// temp.push(count_of(uniques[k]));
-				// 	console.log(uniques[k] + " " + count_of(uniques[k]));
-				// }
 			}
+
+			var bigram = "";
+			var first_word = "";
+			var second_word = "";
+
+			for(var k=0; k<array_of_words.length-1; k++){
+				var temp = []
+				first_word = array_of_words[k].toLowerCase();
+				second_word = array_of_words[k+1].toLowerCase();
+				bigram = first_word+" "+second_word;
+
+				// probabilities[first_word][second_word] = (count_of(bigram)/count_of(first_word));
+
+				temp[second_word] = (count_of(bigram)/count_of(first_word));
+
+				probabilities[first_word].push(temp);
+				// The quick
+				// quick brown
+			}
+			console.log(probabilities);
 
 		</script>
 	</body>

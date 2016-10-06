@@ -29,7 +29,7 @@
 			    return indexes;
 			}
 
-			var input_text = "The quick brown fox jumped over the lazy dog. I dont know why the dog was so lazy, but the fox was quick and brown";
+			var input_text = "The quick brown fox jumped over the lazy dog. I dont know why the dog was so lazy, but the fox was the quick and brown";
 
 			input_text = input_text.toLowerCase().replace(",","").replace(".","");
 
@@ -90,16 +90,26 @@
 
 
 			var appearances = [];
-
+			var following_words = [];
+			var master_list = [];
+			var temp = [];
 
 			for(var k=0; k<uniques.length-1; k++){
+				temp = [];
 				first_word=uniques[k];
 				console.log(first_word);
 				appearances = getAllIndexes(array_of_words,first_word);
+
 				for(var z=0;z<appearances.length;z++){
 					second_word = array_of_words[appearances[z]+1];
 					console.log("    "+second_word);
+					// temp[second_word] = (count_of(first_word+" "+second_word)/count_of(first_word));
+					temp.push([second_word,(count_of(first_word+" "+second_word)/count_of(first_word))])
 				}
+
+				// master_list[first_word] = temp;
+				master_list.push([first_word,temp]);
+
 			}
 
 

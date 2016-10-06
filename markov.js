@@ -131,12 +131,11 @@ var model = {
 			var temp_word = master_string;
 			for(var q=0;q<output_length-1;q++){
 				// temp_word = get_max_dictionary_value(master_list[uniques.indexOf(temp_word)][1])
-				console.log("temp word: "+temp_word);
-				console.log("looking for "+this.word_model[this.uniques.indexOf(temp_word)][0]);
+				console.log("temp_word: "+temp_word);
 				temp_word = this.get_max_dictionary_value(this.word_model[this.uniques.indexOf(temp_word)][1]);
-				console.log("temp word: "+temp_word);
-				console.log("~~~");
+				console.log("temp_word set to:"+ this.get_max_dictionary_value(this.word_model[this.uniques.indexOf(temp_word)][1]))
 				master_string = master_string + " " + temp_word;
+				console.log("master_string: "+master_string);
 			}
 			// print_for_debug(master_string);
 			return master_string;

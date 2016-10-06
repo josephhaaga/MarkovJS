@@ -92,10 +92,10 @@
 			var appearances = [];
 			var following_words = [];
 			var master_list = [];
-			var temp = [];
+			var temp = {};
 
 			for(var k=0; k<uniques.length-1; k++){
-				temp = [];
+				temp = {};
 				first_word=uniques[k];
 				console.log(first_word);
 				appearances = getAllIndexes(array_of_words,first_word);
@@ -103,8 +103,11 @@
 				for(var z=0;z<appearances.length;z++){
 					second_word = array_of_words[appearances[z]+1];
 					console.log("    "+second_word);
-					// temp[second_word] = (count_of(first_word+" "+second_word)/count_of(first_word));
-					temp.push([second_word,(count_of(first_word+" "+second_word)/count_of(first_word))])
+					// if(temp[0].indexOf(second_word)>-1){
+					// 	temp.push([second_word,(count_of(first_word+" "+second_word)/count_of(first_word))])
+					// }
+					temp[second_word] = (count_of(first_word+" "+second_word)/count_of(first_word));
+
 				}
 
 				// master_list[first_word] = temp;

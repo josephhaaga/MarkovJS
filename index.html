@@ -3,31 +3,52 @@
 	<body>
 		<script>
 
+			 // 88  88 888888 88     8888o. 888888 8888o.    888888 88  88 8888o. .o8888 888888 88 .o88o. 8888o. .o8888 
+			 // 88  88 88     88     88  88 88     88  88    88     88  88 88  88 88       88   88 88  88 88  88 88     
+			 // 888888 8888   88     8888Y' 8888   8888Y'    8888   88  88 88  88 88       88   88 88  88 88  88 'Y88o. 
+			 // 88  88 88     88     88     88     88  88    88     88  88 88  88 88       88   88 88  88 88  88     88 
+			 // 88  88 888888 888888 88     888888 88  88    88     'Y88Y' 88  88 'Y8888   88   88 'Y88Y' 88  88 8888Y' 
+
+			var __VERBOSE__ = true;
+
+			function print_for_debug(a_string){
+				if(__VERBOSE__){
+					console.log(a_string);
+				}
+			}
+			function count_of(input_word){
+				if(input_text.indexOf(input_word)>-1){
+					return (input_text.split(input_word).length - 1);
+				}
+			}
+			function getAllIndexes(arr, val) {
+			    var indexes = [], i;
+			    for(i = 0; i < arr.length; i++)
+			        if (arr[i] === val)
+			            indexes.push(i);
+			    return indexes;
+			}
+
 			var input_text = "The quick brown fox jumped over the lazy dog. I dont know why the dog was so lazy, but the fox was quick and brown";
+
+			input_text = input_text.toLowerCase().replace(",","").replace(".","");
 
 
 			var array_of_words = input_text.split(" ");
 
-			console.log(array_of_words);
+			print_for_debug(array_of_words);
 
 			var uniques = [];
 
 			for(var i=0; i<array_of_words.length; i++){
-				array_of_words[i] = array_of_words[i].toLowerCase();
-				// remove periods
-				array_of_words[i] = array_of_words[i].replace(".","");
-				// remove commas
-				array_of_words[i] = array_of_words[i].replace(",","");
+				// Clean up input text
+				// array_of_words[i] = array_of_words[i].toLowerCase().replace(",","").replace(".","");
 				if(!uniques.includes(array_of_words[i])){
 					uniques.push(array_of_words[i]);
 				}
 			}
 
-			console.log(uniques);
-
-			function count_of(input_word){
-				return (input_text.split(input_word).length - 1);
-			}
+			print_for_debug("uniques "+uniques);
 
 			// generate probabilities
 			var probabilities = [];
@@ -38,7 +59,6 @@
 			// probability (j | i) = count(i + j) / count (i)
 
 			for(var j=0; j<uniques.length; j++){
-				// console.log(uniques[j] + " " + count_of(uniques[j]));
 				individual_counts[uniques[j]] = count_of(uniques[j]);
 			}
 
@@ -46,27 +66,53 @@
 			var first_word = "";
 			var second_word = "";
 
-			for(var k=0; k<array_of_words.length-1; k++){
-				var temp = []
-				first_word = array_of_words[k].toLowerCase();
-				second_word = array_of_words[k+1].toLowerCase();
-				bigram = first_word+" "+second_word;
 
-				// probabilities[first_word][second_word] = (count_of(bigram)/count_of(first_word));
 
-				temp[second_word] = (count_of(bigram)/count_of(first_word));
+			// for(var k=0; k<array_of_words.length-1; k++){
+			// 	var temp = [];
+			// 	first_word = array_of_words[k].toLowerCase();
+			// 	second_word = array_of_words[k+1].toLowerCase();
+			// 	bigram = first_word+" "+second_word;
 
-				console.log(probabilities[first_word]);
+			// 	temp[second_word] = (count_of(bigram)/count_of(first_word));
 
-				if(probabilities[first_word]==undefined){
-					probabilities[first_word] = temp;
-				}else{
-					probabilities[first_word].push(temp);
+			// 	if(probabilities[first_word]==undefined){
+			// 		probabilities[first_word] = [];
+			// 		probabilities[first_word].push(temp);
+			// 		// console.log('inserted '+first_word+' prob:'+temp[second_word]);
+			// 	}else{
+			// 		probabilities[first_word].push(temp);
+			// 	}
+			// 	// The quick
+			// 	// quick brown
+			// }
+			// console.log(probabilities);
+
+
+			var appearances = [];
+
+
+			for(var k=0; k<uniques.length-1; k++){
+				first_word=uniques[k];
+				console.log(first_word);
+				appearances = getAllIndexes(array_of_words,first_word);
+				for(var z=0;z<appearances.length;z++){
+					second_word = array_of_words[appearances[z]+1];
+					console.log("    "+second_word);
 				}
-				// The quick
-				// quick brown
 			}
-			console.log(probabilities);
+
+
+
+
+			// for(var k=0; k<uniques.length-1; k++){
+			// 	var num_times_word_appears = individual_counts[uniques[k]];
+			// 	var string = input_text;
+			// 	var appearances = []
+			// 	for(var z=num_times_word_appears;z>0;z--){
+
+			// 	}
+			// }
 
 		</script>
 	</body>

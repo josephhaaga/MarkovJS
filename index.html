@@ -62,50 +62,22 @@
 				individual_counts[uniques[j]] = count_of(uniques[j]);
 			}
 
-			var bigram = "";
 			var first_word = "";
 			var second_word = "";
-
-
-
-			// for(var k=0; k<array_of_words.length-1; k++){
-			// 	var temp = [];
-			// 	first_word = array_of_words[k].toLowerCase();
-			// 	second_word = array_of_words[k+1].toLowerCase();
-			// 	bigram = first_word+" "+second_word;
-
-			// 	temp[second_word] = (count_of(bigram)/count_of(first_word));
-
-			// 	if(probabilities[first_word]==undefined){
-			// 		probabilities[first_word] = [];
-			// 		probabilities[first_word].push(temp);
-			// 		// console.log('inserted '+first_word+' prob:'+temp[second_word]);
-			// 	}else{
-			// 		probabilities[first_word].push(temp);
-			// 	}
-			// 	// The quick
-			// 	// quick brown
-			// }
-			// console.log(probabilities);
-
-
 			var appearances = [];
 			var following_words = [];
 			var master_list = [];
 			var temp = {};
 
-			for(var k=0; k<uniques.length-1; k++){
+			for(var k=0; k<uniques.length; k++){
 				temp = {};
 				first_word=uniques[k];
-				console.log(first_word);
+				print_for_debug(first_word);
 				appearances = getAllIndexes(array_of_words,first_word);
 
 				for(var z=0;z<appearances.length;z++){
 					second_word = array_of_words[appearances[z]+1];
-					console.log("    "+second_word);
-					// if(temp[0].indexOf(second_word)>-1){
-					// 	temp.push([second_word,(count_of(first_word+" "+second_word)/count_of(first_word))])
-					// }
+					print_for_debug("    "+second_word);
 					temp[second_word] = (count_of(first_word+" "+second_word)/count_of(first_word));
 
 				}
@@ -115,17 +87,34 @@
 
 			}
 
+			function get_max_dictionary_value(dictionary){
+				var key_of_largest_item = "";
+				var largest_value = 0;
+				for(var key in dictionary){
+					if(dictionary[key]>largest_value){
+						largest_value = dictionary[key];
+						key_of_largest_item=key;
+					}
+				}
+				return key_of_largest_item;
+			}
 
 
+			function generate(output_length){
+				var master_string = uniques[Math.floor(Math.random()*uniques.length)];
+				var temp_word = master_string;
+				for(var q=0;q<output_length-1;q++){
+					// temp_word = master_list[uniques.indexOf(temp_word)];
+					// print_for_debug(master_list[uniques.indexOf(temp_word)][0]+" "+master_list[uniques.indexOf(temp_word)][1]);
+					// print_for_debug(master_list[uniques.indexOf(temp_word)][1]);
 
-			// for(var k=0; k<uniques.length-1; k++){
-			// 	var num_times_word_appears = individual_counts[uniques[k]];
-			// 	var string = input_text;
-			// 	var appearances = []
-			// 	for(var z=num_times_word_appears;z>0;z--){
+					temp_word = get_max_dictionary_value(master_list[uniques.indexOf(temp_word)][1])
+					master_string = master_string + " " + temp_word;
+				}
+				print_for_debug(master_string);
+			}
 
-			// 	}
-			// }
+
 
 		</script>
 	</body>

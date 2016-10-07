@@ -13,5 +13,9 @@ AWS closed my account (who knows why) and I don't want to pay to host a dumb Mar
 then
 
 ```var m=model.train("pass in the training text here");```
-```m.generate(2);```
+
+``` m.generate(2); ```
+
+returns 
+
 ```> "training text" ```

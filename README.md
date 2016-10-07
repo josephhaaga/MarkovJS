@@ -19,3 +19,7 @@ then
 returns 
 
 ```> "training text" ```
+
+## To do ##
+
+Prevent repeating n-grams by checking for bigram in master_string within generate() for-loop.

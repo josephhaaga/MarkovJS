@@ -122,6 +122,7 @@ var model = {
 
 		}
 		this.word_model = master_list;
+		this.master_list = master_list;
 		// this.uniques = uniques;
 		return this;
 	},
@@ -129,13 +130,21 @@ var model = {
 	generate: 	function generate(output_length){
 			var master_string = this.uniques[Math.floor(Math.random()*this.uniques.length)];
 			var temp_word = master_string;
+			console.log("temp_word: "+temp_word);
 			for(var q=0;q<output_length-1;q++){
 				// temp_word = get_max_dictionary_value(master_list[uniques.indexOf(temp_word)][1])
-				console.log("temp_word: "+temp_word);
+
+				this.print_for_debug(this.word_model[this.uniques.indexOf(temp_word)][1]);
+
 				temp_word = this.get_max_dictionary_value(this.word_model[this.uniques.indexOf(temp_word)][1]);
-				console.log("temp_word set to:"+ this.get_max_dictionary_value(this.word_model[this.uniques.indexOf(temp_word)][1]))
-				master_string = master_string + " " + temp_word;
-				console.log("master_string: "+master_string);
+
+				if(temp_word.length==0){
+					// break;
+				}else{
+					this.print_for_debug("temp_word set to: '"+ this.get_max_dictionary_value(this.word_model[this.uniques.indexOf(temp_word)][1])+"'")
+					master_string = master_string + " " + temp_word;
+					this.print_for_debug("master_string: "+master_string);
+				}
 			}
 			// print_for_debug(master_string);
 			return master_string;

@@ -8,7 +8,7 @@ AWS closed my account (who knows why) and I don't want to pay to host a dumb Mar
 
 ## How? ##
 
-```<script src="markov.js"></script>```
+```<script src="bigram.js"></script>```
 
 then
 

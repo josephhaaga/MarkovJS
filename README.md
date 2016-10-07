@@ -22,4 +22,6 @@ returns
 
 ## To do ##
 
-Prevent repeating n-grams by checking for bigram in master_string within generate() for-loop.
+~~Prevent repeating n-grams by checking for bigram in master_string within generate() for-loop.~~
+Add decay function to complete_sentence()
+	- instead of length parameter, sentence will continue generating until next_word probabilities hit a floor threshold (0.05?)

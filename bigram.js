@@ -160,6 +160,26 @@ var model = {
 				this.print_for_debug("master_string: "+master_string);
 			}
 			return master_string;
+		},
+	finish_sentence: function finish_sentence(phrase,output_length){
+		var master_string = phrase;
+		var temp_word = master_string.split(" ")[master_string.split(" ").length-1];
+		var old_word = "";
+		console.log("temp_word: "+temp_word);
+		for(var q=0;q<output_length-1;q++){
+			this.print_for_debug(this.word_model[this.uniques.indexOf(temp_word)][1]);
+			old_word = temp_word;
+			theoretical_next_word=this.get_max_dictionary_value(this.word_model[this.uniques.indexOf(temp_word)][1]);
+			if(theoretical_next_word.length==0){
+				// select a random word
+				theoretical_next_word = this.uniques[Math.floor(Math.random()*this.uniques.length)]
+			}
+			this.print_for_debug("temp_word set to: '"+ theoretical_next_word);
+			temp_word=theoretical_next_word;
+			master_string = master_string + " " + temp_word;
+			this.print_for_debug("master_string: "+master_string);
 		}
+		return master_string;
+	}
 }
 

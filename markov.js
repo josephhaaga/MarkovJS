@@ -85,12 +85,19 @@ var model = {
 		}
 		function get_max_dictionary_value(dictionary){
 			var key_of_largest_item = "";
+			var second_key_of_largest_item = "";
 			var largest_value = 0;
 			for(var key in dictionary){
 				if(dictionary[key]>largest_value){
 					largest_value = dictionary[key];
 					key_of_largest_item=key;
+				}else if(dictionary[key]==largest_value){
+					// we have a tie
+					second_key_of_largest_item=key;
 				}
+			}
+			if(second_key_of_largest_item.length>0 && Math.random()<0.5){
+				return second_key_of_largest_item;
 			}
 			return key_of_largest_item;
 		}
@@ -157,12 +164,12 @@ var model = {
 					this.print_for_debug("temp_word set to: '"+ theoretical_next_word);
 					temp_word=theoretical_next_word;
 
-					if(master_string.indexOf(old_word+" "+temp_word)==-1 && Math.random()>0.5){
+					// if(master_string.indexOf(old_word+" "+temp_word)==-1 && Math.random()>0.5){
 						master_string = master_string + " " + temp_word;
-					}else{
-						this.print_for_debug("duplicate found");
-						q--;
-					}
+					// }else{
+						// this.print_for_debug("duplicate found");
+						// q--;
+					// }
 					this.print_for_debug("master_string: "+master_string);
 				// }
 			}

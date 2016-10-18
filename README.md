@@ -25,3 +25,8 @@ returns
 ~~Prevent repeating n-grams by checking for bigram in master_string within generate() for-loop.~~
 Add decay function to complete_sentence()
 	- instead of length parameter, sentence will continue generating until next_word probabilities hit a floor threshold (0.05?)
+
+Need to fix complete_sentence() when unseen words are input
+	- make next word the word with highest probability overall?
+	- make next word the word with most unique 2nd words following it?
+Implement backoff

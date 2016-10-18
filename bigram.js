@@ -18,6 +18,7 @@ var model = {
 	first_word:"",
 	second_word: "",
 	appearances: [],
+	training_data: "",
 	master_list: [],
 	array_of_words: [],
 	uniques: [],
@@ -64,6 +65,8 @@ var model = {
 		__VERBOSE__ = debug;
 
 		input_text = input_text.toLowerCase().replace(",","").replace(".","").replace("!","").replace(".","").replace("'","");
+
+		this.training_data=input_text;
 
 		function print_for_debug(a_string){
 			if(__VERBOSE__){
@@ -165,19 +168,68 @@ var model = {
 		var master_string = phrase;
 		var temp_word = master_string.split(" ")[master_string.split(" ").length-1];
 		var old_word = "";
+		var running_product = 1;
 		console.log("temp_word: "+temp_word);
-		for(var q=0;q<output_length-1;q++){
-			this.print_for_debug(this.word_model[this.uniques.indexOf(temp_word)][1]);
-			old_word = temp_word;
-			theoretical_next_word=this.get_max_dictionary_value(this.word_model[this.uniques.indexOf(temp_word)][1]);
-			if(theoretical_next_word.length==0){
-				// select a random word
-				theoretical_next_word = this.uniques[Math.floor(Math.random()*this.uniques.length)]
+		if(typeof output_length == 'number'){
+			console.log("generating sentence of length "+output_length);
+			for(var q=0;q<output_length-1;q++){
+				this.print_for_debug(this.word_model[this.uniques.indexOf(temp_word)][1]);
+				old_word = temp_word;
+				theoretical_next_word=this.get_max_dictionary_value(this.word_model[this.uniques.indexOf(temp_word)][1]);
+				var bigram = new RegExp(old_word+" "+theoretical_next_word,"g");
+				var unigram = new RegExp(old_word,"g");
+				try{
+					bigram_appearances = this.training_data.match(bigram).length;
+					unigram_appearances = this.training_data.match(unigram).length;
+					console.log(old_word+" "+theoretical_next_word+" "+this.training_data.match(bigram).length);
+					console.log(old_word+" "+this.training_data.match(unigram).length);
+					running_product*=(bigram_appearances/unigram_appearances);
+					console.log("running_product: "+running_product);
+					// if(running_product<=0.05){
+					// 	return master_string;
+					// }
+				}catch(err){
+					// bigram not previously encountered
+				}
+				if(theoretical_next_word.length==0){
+					// select a random word
+					theoretical_next_word = this.uniques[Math.floor(Math.random()*this.uniques.length)]
+				}
+				this.print_for_debug("temp_word set to: '"+ theoretical_next_word);
+				temp_word=theoretical_next_word;
+				master_string = master_string + " " + temp_word;
+				this.print_for_debug("master_string: "+master_string);
 			}
-			this.print_for_debug("temp_word set to: '"+ theoretical_next_word);
-			temp_word=theoretical_next_word;
-			master_string = master_string + " " + temp_word;
-			this.print_for_debug("master_string: "+master_string);
+		}else{
+			console.log("generating sentence until decay");
+			while(running_product>=0.05){
+				this.print_for_debug(this.word_model[this.uniques.indexOf(temp_word)][1]);
+				old_word = temp_word;
+				theoretical_next_word=this.get_max_dictionary_value(this.word_model[this.uniques.indexOf(temp_word)][1]);
+				var bigram = new RegExp(old_word+" "+theoretical_next_word,"g");
+				var unigram = new RegExp(old_word,"g");
+				try{
+					bigram_appearances = this.training_data.match(bigram).length;
+					unigram_appearances = this.training_data.match(unigram).length;
+					console.log(old_word+" "+theoretical_next_word+" "+this.training_data.match(bigram).length);
+					console.log(old_word+" "+this.training_data.match(unigram).length);
+					running_product*=(bigram_appearances/unigram_appearances);
+					console.log("running_product: "+running_product);
+					if(running_product<=0.05){
+						return master_string;
+					}
+				}catch(err){
+					// bigram not previously encountered
+				}
+				if(theoretical_next_word.length==0){
+					// select a random word
+					theoretical_next_word = this.uniques[Math.floor(Math.random()*this.uniques.length)]
+				}
+				this.print_for_debug("temp_word set to: '"+ theoretical_next_word);
+				temp_word=theoretical_next_word;
+				master_string = master_string + " " + temp_word;
+				this.print_for_debug("master_string: "+master_string);
+			}
 		}
 		return master_string;
 	}
